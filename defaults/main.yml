@@ -1,0 +1,24 @@
+---
+image_name: local/timemachine
+image_version: latest
+force_build: no
+
+service_name: timemachine
+container_name: "{{service_name}}.service"
+
+working_directory: /opt/timemachine
+dockerfile_path: "{{working_directory}}/docker"
+
+storage_volume: ''
+config_volume: ''
+data_volume: ''
+
+interface: 0.0.0.0
+netatalk_port: ''
+
+log_level: info
+
+timemachine_user: '1001'
+
+# the max size of the data folder (in Kb)
+volume_size_limit: 262144000

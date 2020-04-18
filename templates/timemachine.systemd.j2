@@ -1,0 +1,36 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description={{service_name}} service
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm -f {{container_name}}
+ExecStartPre=/usr/bin/docker build --tag {{image_name}}:{{image_version}} {{dockerfile_path}}
+
+ExecStart=/usr/bin/docker run --name {{container_name}} \
+            --env USERID={{timemachine_user}} \
+            --env GROUPID={{timemachine_user}} \
+{% if storage_volume != "" %}
+            --volume {{storage_volume}}:/timemachine \
+{% endif %}
+{% if config_volume != "" %}
+            --volume {{config_volume}}:/etc \
+{% endif %}
+{% if data_volume != "" %}
+            --volume {{data_volume}}:/var/netatalk \
+{% endif %}
+            --tmpfs /tmp \
+{% if netatalk_port != "" %}
+            --publish {{interface}}:{{netatalk_port}}:548/tcp \
+{% endif %}
+            {{image_name}}:{{image_version}}
+
+ExecStop=-/usr/bin/docker stop {{container_name}}
+ExecStopPost=-/usr/bin/docker rm -f {{container_name}}
+
+Restart=always
+RestartSec=60s
+TimeoutSec=3600

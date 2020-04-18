@@ -1,0 +1,19 @@
+FROM alpine
+
+MAINTAINER "Boris Skert <boris.skert@gmail.com>"
+
+RUN apk --no-cache --no-progress upgrade && \
+    apk --no-cache --no-progress add bash netatalk tini && \
+    addgroup -g {{timemachine_user}} -S tmgroup && \
+    adduser -u {{timemachine_user}} -D -h /timemachine -G tmgroup -g 'TImemachine User' tmuser
+
+COPY ./entrypoint.sh /entrypoint.sh
+
+VOLUME /timemachine
+VOLUME /etc/netatalk
+VOLUME /var/netatalk
+VOLUME /var/lock
+
+EXPOSE 548
+
+ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]

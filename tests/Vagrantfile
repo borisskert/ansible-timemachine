@@ -1,0 +1,40 @@
+# disk = './.vagrant/tmp/secondDisk.vdi'
+
+Vagrant.configure("2") do |config|
+#   config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
+#   config.vm.box = "ubuntu/focal64"
+
+  config.vm.network "private_network", ip: "192.168.33.29"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "ansible_timemachine"
+    vb.memory = 1024
+    vb.cpus = 1
+
+#     # create the second disk and attach it
+#     unless File.exist?(disk)
+#       vb.customize ['createhd', '--filename', disk, '--variant', 'Fixed', '--size', 10 * 1024]
+#     end
+#
+#     vb.customize ['storageattach', :id,  '--storagectl', 'SCSI', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', disk]
+  end
+
+#   config.vm.provision "shell", inline: <<-SHELL
+#     apt update
+#     apt install hfsprogs hfsplus
+#
+#     # https://www.unix.com/shell-programming-and-scripting/207169-non-interactive-fdisk-partition-script.html
+#     echo "n
+#     p
+#     1
+#
+#
+#     w" | fdisk /dev/sdc
+#
+#     sudo mkfs.hfsplus -J /dev/sdc1
+#
+#     mkdir -p /media/timemachine
+#     mount -t hfsplus -o force,rw /dev/sdc1 /media/timemachine
+#   SHELL
+end

@@ -1,0 +1,21 @@
+---
+- include: create-docker-image.yml
+- include: create-volumes.yml
+
+- name: template timemachine config
+  template:
+    src: afp.conf.j2
+    dest: "{{config_volume}}/afp.conf"
+    owner: root
+    group: root
+    mode: 0644
+  when: not(
+    (config_volume is undefined)
+    or
+    (config_volume is none)
+    or
+    (config_volume | trim == '')
+    )
+  register: timemachine_config
+
+- include: setup-systemd-service.yml

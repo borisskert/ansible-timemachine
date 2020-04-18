@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: borisskert
+  description: Installation role for timemachine-server docker container
+  min_ansible_version: 2.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+    - bionic
+  categories:
+  - development
+  - packaging
+  - system
+dependencies: []
