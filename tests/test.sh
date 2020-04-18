@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-export VAGRANT_EXPERIMENTAL="disk_base_config"
 vagrant up --provision
 
 ansible-galaxy install -r requirements.yml -p ./roles --force

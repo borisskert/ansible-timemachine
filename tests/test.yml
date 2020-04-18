@@ -8,7 +8,7 @@
       cleanup_enabled: no
       install_pip_docker: yes
 
-    - role: ansible-timemachine-server
+    - role: ansible-timemachine
       storage_volume: /srv/docker/timemachine/storage
       config_volume: /srv/docker/timemachine/config
       data_volume: /srv/docker/timemachine/data

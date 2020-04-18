@@ -66,3 +66,16 @@ Installs a timemachine server as docker container.
       lock_volume: /srv/docker/timemachine/lock
       log_level: debug
 ```
+
+## Test this role
+
+Requirements:
+
+* ansible
+* vagrant
+* VirtualBox
+
+```shell script
+$ cd tests
+$ ./test.sh
+```
