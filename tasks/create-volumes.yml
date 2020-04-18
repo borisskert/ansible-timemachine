@@ -14,6 +14,21 @@
     (config_volume | trim == '')
     )
 
+- name: create config directory structure
+  file:
+    path: "{{config_volume}}/netatalk"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: not(
+    (config_volume is undefined)
+    or
+    (config_volume is none)
+    or
+    (config_volume | trim == '')
+    )
+
 - name: create data directory
   file:
     path: "{{data_volume}}"
