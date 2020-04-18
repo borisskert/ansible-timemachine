@@ -29,6 +29,7 @@ Installs a timemachine server as docker container.
 | image_name            | text | no | local/timemachine | Docker image name                                  |
 | image_version         | text | no | latest            | Docker image version                               |
 | force_build           | boolean | no | no             | Forces to rebuild docker image                     |
+| server_name           | text | no | Time Machine      | The name of the your time machine instance         |
 | service_name          | text | no | timemachine       | The name of the systemd service                    |
 | container_name        | text | no | timemachine.service | The name of the docker container                 |
 | interface             | ip address | no | 0.0.0.0                 | Mapped network for web-interface ports |
@@ -58,6 +59,7 @@ Installs a timemachine server as docker container.
 
   roles:
     - role: install-timemachine
+      server_name: My Time Machine
       interface: 0.0.0.0
       netatalk_port: 548
       storage_volume: /srv/docker/timemachine/storage

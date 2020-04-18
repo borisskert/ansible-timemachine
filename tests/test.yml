@@ -9,11 +9,22 @@
       install_pip_docker: yes
 
     - role: ansible-timemachine
+      server_name: My Time Machine
       storage_volume: /srv/docker/timemachine/storage
       config_volume: /srv/docker/timemachine/config
       data_volume: /srv/docker/timemachine/data
       lock_volume: /srv/docker/timemachine/lock
-
       interface: 0.0.0.0
       netatalk_port: 548
       log_level: debug
+
+    - role: install-avahi
+      published_services:
+        - name: timemachine
+          services:
+            - type: _afpovertcp._tcp
+              port: 548
+            - type: _device-info._tcp
+              port: 0
+              txt_records:
+                - model=TimeCapsule

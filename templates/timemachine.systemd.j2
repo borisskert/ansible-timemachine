@@ -14,10 +14,11 @@ ExecStart=/usr/bin/docker run --name {{container_name}} \
             --env USERID={{timemachine_user}} \
             --env GROUPID={{timemachine_user}} \
 {% if storage_volume != "" %}
-            --volume {{storage_volume}}:/timemachine \
+            --volume {{storage_volume}}:/media/time_machine \
 {% endif %}
 {% if config_volume != "" %}
-            --volume {{config_volume}}:/etc \
+            --volume {{config_volume}}/afp.conf:/etc/afp.conf:ro \
+            --volume {{config_volume}}/netatalk/AppleVolumes.default:/etc/netatalk/AppleVolumes.default:ro \
 {% endif %}
 {% if data_volume != "" %}
             --volume {{data_volume}}:/var/netatalk \

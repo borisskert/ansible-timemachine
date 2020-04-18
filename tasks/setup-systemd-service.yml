@@ -21,6 +21,7 @@
     dockerimage.changed
     or systemd_service.changed
     or timemachine_config.changed
+    or timemachine_volumes_config.changed
 
 - name: Start service (if not started already)
   service:

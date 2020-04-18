@@ -1,17 +1,17 @@
 [Global]
-mimic model = AirPort
 log file = /dev/stdout
 {% if log_level is defined %}
 log level = default:{{log_level}}
 {% else %}
 log level = default:info
 {% endif %}
-zeroconf = no
-# TODO: monitor transfer speed changes
-dsireadbuf = 24
 
+{% if server_name != "" %}
+[{{server_name}}]
+{% else %}
 [Time Machine]
-path = /timemachine
+{% endif %}
+path = /media/time_machine
 valid users = tmuser
 time machine = yes
 {% if volume_size_limit is defined %}
