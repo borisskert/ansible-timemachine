@@ -45,7 +45,7 @@ Installs a timemachine server as docker container.
 ### Requirements
 
 ```yaml
-- name: install-docker
+- name: install-timemachine
   src: https://github.com/borisskert/ansible-timemachine.git
   scm: git
 ```
@@ -57,7 +57,7 @@ Installs a timemachine server as docker container.
   become: yes
 
   roles:
-    - role: ansible-timemachine
+    - role: install-timemachine
       interface: 0.0.0.0
       netatalk_port: 548
       storage_volume: /srv/docker/timemachine/storage
