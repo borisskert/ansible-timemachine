@@ -24,6 +24,15 @@
     mode: '0755'
   register: docker_entrypoint
 
+- name: Copy add-user script
+  copy:
+    src: files/add-timemachine-user.sh
+    dest: "{{working_directory}}/docker/add-timemachine-user.sh"
+    owner: root
+    group: root
+    mode: '0755'
+  register: docker_add_user_script
+
 - name: template dockerfile
   template:
     src: Dockerfile.j2
@@ -41,5 +50,10 @@
     name: "{{image_name}}"
     tag: "{{image_version}}"
     source: build
-    force_source: "{{ dockerfile.changed or docker_entrypoint.changed or force_build }}"
+    force_source: "{{
+      dockerfile.changed
+      or docker_entrypoint.changed
+      or docker_add_user_script.changed
+      or force_build
+      }}"
   register: dockerimage

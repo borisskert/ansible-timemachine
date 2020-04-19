@@ -1,0 +1,48 @@
+---
+- name: Template timemachine config
+  template:
+    src: afp.conf.j2
+    dest: "{{config_volume}}/etc/afp.conf"
+    owner: root
+    group: root
+    mode: 0644
+  when: not(
+    (config_volume is undefined)
+    or
+    (config_volume is none)
+    or
+    (config_volume | trim == '')
+    )
+  register: timemachine_config
+
+- name: Template volumes config
+  template:
+    src: AppleVolumes.default.j2
+    dest: "{{config_volume}}/etc/netatalk/AppleVolumes.default"
+    owner: root
+    group: root
+    mode: 0644
+  when: not(
+    (config_volume is undefined)
+    or
+    (config_volume is none)
+    or
+    (config_volume | trim == '')
+    )
+  register: timemachine_volumes_config
+
+- name: Copy extmap config
+  copy:
+    src: files/extmap.conf
+    dest: "{{config_volume}}/etc/extmap.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  register: extmap_file
+  when: not(
+    (config_volume is undefined)
+    or
+    (config_volume is none)
+    or
+    (config_volume | trim == '')
+    )

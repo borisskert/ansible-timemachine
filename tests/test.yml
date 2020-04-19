@@ -16,7 +16,23 @@
       lock_volume: /srv/docker/timemachine/lock
       interface: 0.0.0.0
       netatalk_port: 548
-      log_level: debug
+      log_level: error
+      users:
+        - username: user1
+          password: psw1
+          uid: 2001
+        - username: user2
+          password: psw2
+          uid: 2002
+      storages:
+        - name: Time Machine user1
+          path: storage1
+          user: user1
+          size_limit: 262144000
+        - name: Time Machine user2
+          path: storage2
+          user: user2
+          size_limit: 131072000
 
     - role: install-avahi
       published_services:

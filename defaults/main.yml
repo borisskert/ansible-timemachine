@@ -16,11 +16,9 @@ data_volume: ''
 interface: 0.0.0.0
 netatalk_port: ''
 
-server_name: Time Machine
-
 log_level: info
 
-timemachine_user: '1001'
+users: []
+storages: []
 
-# the max size of the data folder (in Kb)
-volume_size_limit: 262144000
+default_volume_size_limit: 1048576

@@ -1,0 +1,15 @@
+---
+- name: Search storage
+  set_fact:
+    selected_storage: >
+      {{
+      storages
+      | selectattr('user', 'defined')
+      | selectattr('user', 'eq', item.username)
+      | first
+      }}
+
+- name: Create timemachine user
+  shell: '/usr/bin/docker exec {{container_name}} /add-timemachine-user.sh {{item.uid}} {{item.username}} {{item.password}} /media/time_machine/{{selected_storage.path}}'
+  register: created_user
+  changed_when: created_user.stdout | length > 0

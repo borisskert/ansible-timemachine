@@ -1,19 +1,21 @@
 [Global]
+mimic model = Xserve
 log file = /dev/stdout
 {% if log_level is defined %}
 log level = default:{{log_level}}
 {% else %}
 log level = default:info
 {% endif %}
+zeroconf = no
 
-{% if server_name != "" %}
-[{{server_name}}]
-{% else %}
-[Time Machine]
-{% endif %}
-path = /media/time_machine
-valid users = tmuser
+{% for storage in storages %}
+[{{storage.name}}]
+path = /media/time_machine/{{storage.path}}
+valid users = {{storage.user}}
 time machine = yes
-{% if volume_size_limit is defined %}
-vol size limit = {{volume_size_limit}}
+{% if storage.size_limit is defined %}
+vol size limit = {{storage.size_limit}}
+{% else %}
+vol size limit = {{default_volume_size_limit}}
 {% endif %}
+{% endfor %}

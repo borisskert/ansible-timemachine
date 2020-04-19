@@ -2,36 +2,11 @@
 - include: create-docker-image.yml
 - include: create-volumes.yml
 
-- name: Template timemachine config
-  template:
-    src: afp.conf.j2
-    dest: "{{config_volume}}/afp.conf"
-    owner: root
-    group: root
-    mode: 0644
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
-  register: timemachine_config
+- include: create-storage.yml
+  with_items: "{{storages}}"
 
-- name: Template volumes config
-  template:
-    src: AppleVolumes.default.j2
-    dest: "{{config_volume}}/netatalk/AppleVolumes.default"
-    owner: root
-    group: root
-    mode: 0644
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
-  register: timemachine_volumes_config
-
+- include: setup-netatalk-config.yml
 - include: setup-systemd-service.yml
+
+- include: create-user.yml
+  with_items: "{{users}}"

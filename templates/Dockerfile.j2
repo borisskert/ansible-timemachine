@@ -3,11 +3,10 @@ FROM alpine
 MAINTAINER "Boris Skert <boris.skert@gmail.com>"
 
 RUN apk --no-cache --no-progress upgrade && \
-    apk --no-cache --no-progress add bash netatalk tini && \
-    addgroup -g {{timemachine_user}} -S tmgroup && \
-    adduser -u {{timemachine_user}} -D -h /timemachine -G tmgroup -g 'TImemachine User' tmuser
+    apk --no-cache --no-progress add bash netatalk tini
 
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./add-timemachine-user.sh /add-timemachine-user.sh
 
 VOLUME /media/time_machine
 VOLUME /etc/netatalk
@@ -15,5 +14,7 @@ VOLUME /var/netatalk
 VOLUME /var/lock
 
 EXPOSE 548
+
+RUN cat /etc/extmap.conf
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]

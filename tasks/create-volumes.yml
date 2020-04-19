@@ -14,13 +14,7 @@
     (config_volume | trim == '')
     )
 
-- name: create config directory structure
-  file:
-    path: "{{config_volume}}/netatalk"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
+- include: create-config-etc-structure.yml
   when: not(
     (config_volume is undefined)
     or
@@ -32,6 +26,21 @@
 - name: create data directory
   file:
     path: "{{data_volume}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  when: not(
+    (data_volume is undefined)
+    or
+    (data_volume is none)
+    or
+    (data_volume | trim == '')
+    )
+
+- name: create data CNID db directory
+  file:
+    path: "{{data_volume}}/CNID"
     state: directory
     owner: root
     group: root

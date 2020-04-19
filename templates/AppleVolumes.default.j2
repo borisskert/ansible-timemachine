@@ -1,5 +1,3 @@
-{% if server_name != "" %}
-/media/time_machine "{{server_name}}" options:tm
-{% else %}
-/media/time_machine "Time Machine" options:tm
-{% endif %}
+{% for storage in storages %}
+/media/time_machine/{{storage.path}} "{{storage.name}}" options:tm
+{% endfor %}

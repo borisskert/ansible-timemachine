@@ -16,7 +16,7 @@ Installs a timemachine server as docker container.
 * Template Dockerfile
 * Build docker image
 * Create volume paths for docker container
-* Template the netatalk config
+* Template the initial netatalk config (including user and storage definition)
 * Setup systemd unit file
 * Start/Restart service
 
@@ -36,10 +36,28 @@ Installs a timemachine server as docker container.
 | netatalk_port         | port       | no | <empty>                 | THe default port (TCP) for netatalk is: 548 |
 | config_volume         | path       | no | <empty>                 | Path to config volume (which lays at /etc by default) |
 | data_volume           | path       | no | <empty>                 | Path to data and cache volume (which lays at /var/netatalk by default) |
-| storage_volume        | path       | no | <empty>                 | Path to where your backups will be stored |
-| log_level             | text       | no | info                    | Netatalk's configured log level (debug, info, ...) |
-| timemachine_user      | user id    | no | 1001                    | Default timemachine user id |
-| volume_size_limit     | number     | no | 262144000               | The maximum size of your backups folder (in Kb) |
+| storage_volume        | path       | no | <empty>                 | Path to where your backups will be stored                              |
+| log_level             | text       | no | info                    | Netatalk's configured log level (debug, info, ...)                     |
+| default_volume_size_limit | number     | no | 262144000           | The default size limit for storage (1 GB in KB)                        |
+| users                     | array of User | no | []               | The users which will be registered to your timemachine                 |
+| storages                  | array of Storage | no | []            | The storages for your users in your timemachine                        |
+
+#### User definition
+
+| Variable      | Type | Mandatory? | Default | Description           |
+|---------------|------|------------|---------|-----------------------|
+| username      | text | yes        |         | The username of your user (has to be unique!) |
+| password      | text | yes        |         | The password of your user                     |
+| uid           | number | yes      |         | The unix user id of your user (has to be unique!) |
+
+#### Storage definition
+
+| Variable      | Type | Mandatory? | Default | Description           |
+|---------------|------|------------|---------|-----------------------|
+| name          | text | no         | Time Machine | The name of the users storage |
+| path          | text | yes        |              | Where the storage will be located within the storages volume |
+| user          | text | yes        |              | Whom this storage belongs to                                 |
+| size_limit    | number | no       | value of `default_volume_size_limit` | The maximum size in KB of this storage |
 
 ## Usage
 
@@ -59,14 +77,29 @@ Installs a timemachine server as docker container.
 
   roles:
     - role: install-timemachine
-      server_name: My Time Machine
-      interface: 0.0.0.0
-      netatalk_port: 548
       storage_volume: /srv/docker/timemachine/storage
       config_volume: /srv/docker/timemachine/config
       data_volume: /srv/docker/timemachine/data
       lock_volume: /srv/docker/timemachine/lock
-      log_level: debug
+      interface: 0.0.0.0
+      netatalk_port: 548
+      log_level: error
+      users:
+        - username: user1
+          password: psw1
+          uid: 2001
+        - username: user2
+          password: psw2
+          uid: 2002
+      storages:
+        - name: Time Machine user1
+          path: storage1
+          user: user1
+          size_limit: 262144000
+        - name: Time Machine user2
+          path: storage2
+          user: user2
+          size_limit: 131072000
 ```
 
 ## Test this role
