@@ -33,9 +33,9 @@ Installs a timemachine server as docker container.
 | service_name          | text | no | timemachine       | The name of the systemd service                    |
 | container_name        | text | no | timemachine.service | The name of the docker container                 |
 | interface             | ip address | no | 0.0.0.0                 | Mapped network for web-interface ports |
-| netatalk_port         | port       | no | <empty>                 | THe default port (TCP) for netatalk is: 548 |
+| netatalk_port         | port       | no | <empty>                 | The default port (TCP) for netatalk is: 548 |
+| host_name             | text       | no | <empty>                 | The showed hostname by netatalk             |
 | config_volume         | path       | no | <empty>                 | Path to config volume (which lays at /etc by default) |
-| data_volume           | path       | no | <empty>                 | Path to data and cache volume (which lays at /var/netatalk by default) |
 | storage_volume        | path       | no | <empty>                 | Path to where your backups will be stored                              |
 | log_level             | text       | no | info                    | Netatalk's configured log level (debug, info, ...)                     |
 | default_volume_size_limit | number     | no | 262144000           | The default size limit for storage (1 GB in KB)                        |
@@ -77,10 +77,9 @@ Installs a timemachine server as docker container.
 
   roles:
     - role: install-timemachine
+      host_name: my-ansible-timemachine
       storage_volume: /srv/docker/timemachine/storage
       config_volume: /srv/docker/timemachine/config
-      data_volume: /srv/docker/timemachine/data
-      lock_volume: /srv/docker/timemachine/lock
       interface: 0.0.0.0
       netatalk_port: 548
       log_level: error

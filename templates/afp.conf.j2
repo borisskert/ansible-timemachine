@@ -1,4 +1,7 @@
 [Global]
+{% if host_name is defined %}
+hostname = {{host_name}}
+{% endif %}
 mimic model = Xserve
 log file = /dev/stdout
 {% if log_level is defined %}

@@ -17,10 +17,9 @@ ExecStart=/usr/bin/docker run --name {{container_name}} \
 {% if config_volume != "" %}
             --volume {{config_volume}}/etc:/etc \
 {% endif %}
-{% if data_volume != "" %}
-            --volume {{data_volume}}:/var/netatalk \
-{% endif %}
             --tmpfs /tmp \
+            --tmpfs /var/netatalk \
+            --tmpfs /var/lock \
 {% if netatalk_port != "" %}
             --publish {{interface}}:{{netatalk_port}}:548/tcp \
 {% endif %}

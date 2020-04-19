@@ -14,43 +14,13 @@
     (config_volume | trim == '')
     )
 
-- include: create-config-etc-structure.yml
+- include: create-initial-netatalk-config.yml
   when: not(
     (config_volume is undefined)
     or
     (config_volume is none)
     or
     (config_volume | trim == '')
-    )
-
-- name: create data directory
-  file:
-    path: "{{data_volume}}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0775
-  when: not(
-    (data_volume is undefined)
-    or
-    (data_volume is none)
-    or
-    (data_volume | trim == '')
-    )
-
-- name: create data CNID db directory
-  file:
-    path: "{{data_volume}}/CNID"
-    state: directory
-    owner: root
-    group: root
-    mode: 0775
-  when: not(
-    (data_volume is undefined)
-    or
-    (data_volume is none)
-    or
-    (data_volume | trim == '')
     )
 
 - name: create storage directories
@@ -66,19 +36,4 @@
     (storage_volume is none)
     or
     (storage_volume | trim == '')
-    )
-
-- name: create lock directories
-  file:
-    path: "{{lock_volume}}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-  when: not(
-    (lock_volume is undefined)
-    or
-    (lock_volume is none)
-    or
-    (lock_volume | trim == '')
     )

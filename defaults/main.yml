@@ -11,11 +11,11 @@ dockerfile_path: "{{working_directory}}/docker"
 
 storage_volume: ''
 config_volume: ''
-data_volume: ''
 
 interface: 0.0.0.0
 netatalk_port: ''
 
+host_name: ''
 log_level: info
 
 users: []
