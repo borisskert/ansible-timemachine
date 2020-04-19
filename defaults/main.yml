@@ -17,8 +17,9 @@ netatalk_port: ''
 
 host_name: ''
 log_level: info
+mimic_model: TimeCapsule
 
 users: []
 storages: []
 
-default_volume_size_limit: 1048576
+default_volume_size_limit: 1000

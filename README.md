@@ -38,7 +38,8 @@ Installs a timemachine server as docker container.
 | config_volume         | path       | no | <empty>                 | Path to config volume (which lays at /etc by default) |
 | storage_volume        | path       | no | <empty>                 | Path to where your backups will be stored                              |
 | log_level             | text       | no | info                    | Netatalk's configured log level (debug, info, ...)                     |
-| default_volume_size_limit | number     | no | 262144000           | The default size limit for storage (1 GB in KB)                        |
+| mimic_model           | text       | no | <empty>                 | Specifies the icon model that appears on clients                       |
+| default_volume_size_limit | number     | no | 1000                | The default size limit for storage (1 GB in MiB)                       |
 | users                     | array of User | no | []               | The users which will be registered to your timemachine                 |
 | storages                  | array of Storage | no | []            | The storages for your users in your timemachine                        |
 
@@ -57,7 +58,7 @@ Installs a timemachine server as docker container.
 | name          | text | no         | Time Machine | The name of the users storage |
 | path          | text | yes        |              | Where the storage will be located within the storages volume |
 | user          | text | yes        |              | Whom this storage belongs to                                 |
-| size_limit    | number | no       | value of `default_volume_size_limit` | The maximum size in KB of this storage |
+| size_limit    | number | no       | value of `default_volume_size_limit` | The maximum size in MiB of this storage |
 
 ## Usage
 
@@ -83,6 +84,7 @@ Installs a timemachine server as docker container.
       interface: 0.0.0.0
       netatalk_port: 548
       log_level: error
+      mimic_model: RackMac
       users:
         - username: user1
           password: psw1
@@ -94,11 +96,11 @@ Installs a timemachine server as docker container.
         - name: Time Machine user1
           path: storage1
           user: user1
-          size_limit: 262144000
+          size_limit: 256000
         - name: Time Machine user2
           path: storage2
           user: user2
-          size_limit: 131072000
+          size_limit: 64000
 ```
 
 ## Test this role

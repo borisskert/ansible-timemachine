@@ -10,6 +10,7 @@
 
     - role: ansible-timemachine
       host_name: my-ansible-timemachine
+      mimic_model: RackMac
       server_name: My Time Machine
       storage_volume: /srv/docker/timemachine/storage
       config_volume: /srv/docker/timemachine/config
@@ -27,11 +28,11 @@
         - name: Time Machine user1
           path: storage1
           user: user1
-          size_limit: 262144000
+          size_limit: 256000
         - name: Time Machine user2
           path: storage2
           user: user2
-          size_limit: 131072000
+          size_limit: 64000
 
     - role: install-avahi
       published_services:
@@ -43,3 +44,9 @@
               port: 0
               txt_records:
                 - model=TimeCapsule
+            - type: _adisk._tcp
+              port: 9
+              txt_records:
+                - sys=waMa=0,adVF=0x100,adVU=00000000-AAAA-BBBB-CCCC-111111111111
+                - dk0=adVN=Time Machine user1,adVF=0x81
+                - dk1=adVN=Time Machine user2,adVF=0x81

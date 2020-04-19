@@ -2,14 +2,18 @@
 {% if host_name is defined %}
 hostname = {{host_name}}
 {% endif %}
-mimic model = Xserve
+{% if mimic_model is defined %}
+mimic model = {{mimic_model}}
+{% else %}
+mimic model = TimeCapsule
+{% endif %}
 log file = /dev/stdout
 {% if log_level is defined %}
 log level = default:{{log_level}}
 {% else %}
 log level = default:info
 {% endif %}
-zeroconf = no
+zeroconf = yes
 
 {% for storage in storages %}
 [{{storage.name}}]
