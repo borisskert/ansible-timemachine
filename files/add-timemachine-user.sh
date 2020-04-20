@@ -10,37 +10,37 @@ home=$4
 gid=$user_id
 group=$user
 
-is_group_existing () {
-  if cat < /etc/group | grep "^$group:" 1> /dev/null; then
+is_group_existing() {
+  if cat </etc/group | grep "^$group:" 1>/dev/null; then
     true
   else
     false
   fi
 }
 
-is_user_existing () {
-  if cat < /etc/passwd | grep "^$user:" 1> /dev/null; then
+is_user_existing() {
+  if cat </etc/passwd | grep "^$user:" 1>/dev/null; then
     true
   else
     false
   fi
 }
 
-create_group () {
+create_group() {
   addgroup -g "$gid" "$group"
 }
 
-create_user () {
+create_user() {
   adduser -u "$user_id" -S -H -h "$home" -G "$group" "$user"
   echo "$user:$password" | chpasswd
 }
 
 if ! is_group_existing; then
-   create_group
+  create_group
   echo "Group $group created"
 fi
 
 if ! is_user_existing; then
-   create_user
+  create_user
   echo "User $user created"
 fi

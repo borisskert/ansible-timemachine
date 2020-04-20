@@ -18,7 +18,7 @@
 - name: Copy docker entrypoint
   copy:
     src: files/entrypoint.sh
-    dest: "{{working_directory}}/docker/entrypoint.sh"
+    dest: "{{dockerfile_path}}/entrypoint.sh"
     owner: root
     group: root
     mode: '0755'
@@ -27,7 +27,7 @@
 - name: Copy add-user script
   copy:
     src: files/add-timemachine-user.sh
-    dest: "{{working_directory}}/docker/add-timemachine-user.sh"
+    dest: "{{dockerfile_path}}/add-timemachine-user.sh"
     owner: root
     group: root
     mode: '0755'
