@@ -9,11 +9,13 @@
       install_pip_docker: yes
 
     - role: ansible-timemachine
+      alpine_version: 3.11.5
+      netatalk_version: 3.1.12-r1
       host_name: my-ansible-timemachine
       mimic_model: RackMac
       server_name: My Time Machine
-      storage_volume: /srv/docker/timemachine/storage
-      config_volume: /srv/docker/timemachine/config
+      storage_volume: /srv/timemachine/storage
+      config_volume: /srv/timemachine/config
       interface: 0.0.0.0
       netatalk_port: 548
       log_level: error

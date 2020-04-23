@@ -26,6 +26,8 @@ Installs a timemachine server as docker container.
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
+| alpine_version        | text | no | latest            | Your selected alpine version                       |
+| netatalk_version      | text | no | latest            | Your selected netatalk version                     |
 | image_name            | text | no | local/timemachine | Docker image name                                  |
 | image_version         | text | no | latest            | Docker image version                               |
 | force_build           | boolean | no | no             | Forces to rebuild docker image                     |
@@ -35,10 +37,10 @@ Installs a timemachine server as docker container.
 | interface             | ip address | no | 0.0.0.0                 | Mapped network for web-interface ports |
 | netatalk_port         | port       | no | <empty>                 | The default port (TCP) for netatalk is: 548 |
 | host_name             | text       | no | <empty>                 | The showed hostname by netatalk             |
-| config_volume         | path       | no | <empty>                 | Path to config volume (which lays at /etc by default) |
-| storage_volume        | path       | no | <empty>                 | Path to where your backups will be stored                              |
-| log_level             | text       | no | info                    | Netatalk's configured log level (debug, info, ...)                     |
-| mimic_model           | text       | no | <empty>                 | Specifies the icon model that appears on clients                       |
+| config_volume         | path       | yes | <empty>                 | Path to config volume (which lays at /etc by default) |
+| storage_volume        | path       | yes | <empty>                 | Path to where your backups will be stored                             |
+| log_level             | text       | no  | info                    | Netatalk's configured log level (debug, info, ...)                    |
+| mimic_model           | text       | no  | <empty>                 | Specifies the icon model that appears on clients                      |
 | default_volume_size_limit | number     | no | 1000                | The default size limit for storage (1 GB in MiB)                       |
 | users                     | array of User | no | []               | The users which will be registered to your timemachine                 |
 | storages                  | array of Storage | no | []            | The storages for your users in your timemachine                        |
@@ -78,9 +80,12 @@ Installs a timemachine server as docker container.
 
   roles:
     - role: install-timemachine
+      alpine_version: 3.11.5
+      netatalk_version: 3.1.12-r1
       host_name: my-ansible-timemachine
-      storage_volume: /srv/docker/timemachine/storage
-      config_volume: /srv/docker/timemachine/config
+      server_name: My Time Machine
+      storage_volume: /srv/timemachine/storage
+      config_volume: /srv/timemachine/config
       interface: 0.0.0.0
       netatalk_port: 548
       log_level: error

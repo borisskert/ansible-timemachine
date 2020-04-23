@@ -6,13 +6,6 @@
     owner: root
     group: root
     mode: 0755
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
 
 - name: Check if passwd db exists
   stat:
@@ -27,13 +20,6 @@
     group: root
     mode: 0644
   when: not passwd_file.stat.exists
-    and not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
 
 - name: Check if shadow db exists
   stat:
@@ -48,13 +34,6 @@
     group: root
     mode: 0640
   when: not shadow_file.stat.exists
-    and not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
 
 - name: Check if group db exists
   stat:
@@ -69,13 +48,6 @@
     group: root
     mode: 0640
   when: not group_file.stat.exists
-    and not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
 
 - name: Create etc/netatalk directory
   file:
@@ -84,10 +56,3 @@
     owner: root
     group: root
     mode: 0755
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )

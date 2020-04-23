@@ -6,13 +6,6 @@
     owner: root
     group: root
     mode: 0644
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
   register: timemachine_config
 
 - name: Template volumes config
@@ -22,13 +15,6 @@
     owner: root
     group: root
     mode: 0644
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
   register: timemachine_volumes_config
 
 - name: Copy extmap config
@@ -39,10 +25,3 @@
     group: root
     mode: '0644'
   register: extmap_file
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )

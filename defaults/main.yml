@@ -1,4 +1,7 @@
 ---
+alpine_version: latest
+netatalk_version: latest
+
 image_name: local/timemachine
 image_version: latest
 force_build: no

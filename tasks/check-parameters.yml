@@ -1,0 +1,14 @@
+---
+- name: check 'config_volume' parameter
+  assert:
+    that:
+      - "config_volume is defined"
+      - "config_volume | length > 0"
+    fail_msg: "parameter 'config_volume' is missing"
+
+- name: check 'storage_volume' parameter
+  assert:
+    that:
+      - "storage_volume is defined"
+      - "storage_volume | length > 0"
+    fail_msg: "parameter 'storage_volume' is missing"

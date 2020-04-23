@@ -1,4 +1,6 @@
 ---
+- include: check-parameters.yml
+
 - include: create-docker-image.yml
 - include: create-volumes.yml
 

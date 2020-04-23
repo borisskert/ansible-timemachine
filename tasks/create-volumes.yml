@@ -1,39 +1,18 @@
 ---
-- name: create config directory
+- name: Create config directory
   file:
     path: "{{config_volume}}"
     state: directory
     owner: root
     group: root
     mode: 0755
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
 
 - include: create-initial-netatalk-config.yml
-  when: not(
-    (config_volume is undefined)
-    or
-    (config_volume is none)
-    or
-    (config_volume | trim == '')
-    )
 
-- name: create storage directories
+- name: Create storage directories
   file:
     path: "{{storage_volume}}"
     state: directory
     owner: root
     group: root
     mode: 0777
-  when: not(
-    (storage_volume is undefined)
-    or
-    (storage_volume is none)
-    or
-    (storage_volume | trim == '')
-    )
