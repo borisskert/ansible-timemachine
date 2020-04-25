@@ -48,8 +48,9 @@
       path: "{{dockerfile_path}}"
       pull: no
     name: "{{image_name}}"
-    tag: "{{image_version}}"
+    tag: "{{netatalk_version}}"
     source: build
+    state: present
     force_source: "{{
       dockerfile.changed
       or docker_entrypoint.changed

@@ -29,7 +29,6 @@ Installs a timemachine server as docker container.
 | alpine_version        | text | no | latest            | Your selected alpine version                       |
 | netatalk_version      | text | no | latest            | Your selected netatalk version                     |
 | image_name            | text | no | local/timemachine | Docker image name                                  |
-| image_version         | text | no | latest            | Docker image version                               |
 | force_build           | boolean | no | no             | Forces to rebuild docker image                     |
 | server_name           | text | no | Time Machine      | The name of the your time machine instance         |
 | service_name          | text | no | timemachine       | The name of the systemd service                    |
