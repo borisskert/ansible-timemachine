@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# add-timemachine-user.sh user_id username password home
+# add-user.sh user_id username password home
 
 user_id=$1
 user=$2

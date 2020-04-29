@@ -21,7 +21,7 @@
       log_level: error
       users:
         - username: user1
-          password: psw1
+          password: user1pwd
           uid: 2001
         - username: user2
           password: psw2
@@ -38,7 +38,8 @@
 
     - role: install-avahi
       published_services:
-        - name: timemachine
+        - name: '%h'
+          file: timemachine
           services:
             - type: _afpovertcp._tcp
               port: 548

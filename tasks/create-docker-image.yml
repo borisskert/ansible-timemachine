@@ -26,12 +26,21 @@
 
 - name: Copy add-user script
   copy:
-    src: files/add-timemachine-user.sh
-    dest: "{{dockerfile_path}}/add-timemachine-user.sh"
+    src: files/add-user.sh
+    dest: "{{dockerfile_path}}/add-user.sh"
     owner: root
     group: root
     mode: '0755'
   register: docker_add_user_script
+
+- name: Copy update-user-password script
+  copy:
+    src: files/update-user-password.sh
+    dest: "{{dockerfile_path}}/update-user-password.sh"
+    owner: root
+    group: root
+    mode: '0755'
+  register: docker_update_user_password_script
 
 - name: Template dockerfile
   template:
@@ -55,6 +64,7 @@
       dockerfile.changed
       or docker_entrypoint.changed
       or docker_add_user_script.changed
+      or docker_update_user_password_script.changed
       or force_build
       }}"
   register: dockerimage

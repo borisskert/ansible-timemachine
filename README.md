@@ -51,6 +51,7 @@ Installs a timemachine server as docker container.
 | username      | text | yes        |         | The username of your user (has to be unique!) |
 | password      | text | yes        |         | The password of your user                     |
 | uid           | number | yes      |         | The unix user id of your user (has to be unique!) |
+| update_password | boolean | no    | no      | Update the user's password                        |
 
 #### Storage definition
 
@@ -96,6 +97,7 @@ Installs a timemachine server as docker container.
         - username: user2
           password: psw2
           uid: 2002
+          update_password: yes
       storages:
         - name: Time Machine user1
           path: storage1
