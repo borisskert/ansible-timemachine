@@ -6,12 +6,13 @@ galaxy_info:
   license: MIT
   min_ansible_version: 2.9
   platforms:
-  - name: Ubuntu
-    versions:
-    - xenial
-    - bionic
-  categories:
-  - development
-  - packaging
-  - system
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+        - focal
+  galaxy_tags:
+    - development
+    - packaging
+    - system
 dependencies: []

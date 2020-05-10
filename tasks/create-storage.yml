@@ -11,8 +11,8 @@
 
 - name: Create storage
   file:
-    path: "{{storage_volume}}/{{item.path}}"
+    path: "{{ storage_volume }}/{{ item.path }}"
     state: directory
-    owner: "{{selected_user.uid}}"
-    group: "{{selected_user.uid}}"
+    owner: "{{ selected_user.uid }}"
+    group: "{{ selected_user.uid }}"
     mode: 0750

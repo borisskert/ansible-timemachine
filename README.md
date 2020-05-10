@@ -80,8 +80,8 @@ Installs a timemachine server as docker container.
 
   roles:
     - role: install-timemachine
-      alpine_version: 3.11.5
-      netatalk_version: 3.1.12-r1
+      alpine_version: '3.11'
+      netatalk_version: '3.1'
       host_name: my-ansible-timemachine
       server_name: My Time Machine
       storage_volume: /srv/timemachine/storage

@@ -9,8 +9,29 @@
       | first
       }}
 
-- name: Create timemachine user
+- name: Prepare user
+  set_fact:
+    user_to_create:
+      uid: "{{ item.uid }}"
+      username: "{{ item.username }}"
+      password: "{{ item.password }}"
+      storage: "{{ selected_storage }}"
+
+- name: Determine if timemachine has to be created
   shell: |
-    /usr/bin/docker exec {{container_name}} /add-user.sh {{item.uid}} "{{item.username}}" '{{item.password}}' "/media/time_machine/{{selected_storage.path}}"
-  register: created_user
-  changed_when: created_user.stdout | length > 0
+    set -o pipefail
+    cat {{ config_volume }}/etc/passwd \
+    | grep {{ user_to_create.username }}:x:{{ user_to_create.uid }}
+  args:
+    executable: /bin/bash
+  register: user_exists
+  changed_when: user_exists.stdout | length < 1
+  failed_when: false
+  notify: Create timemachine user
+
+# I need this task cause I don't know another way to notify
+# a handler with a parameter or variable
+- name: Users for creation
+  set_fact:
+    users_for_creation: "{{ users_for_creation + [user_to_create] }}"
+  when: user_exists.changed  # noqa 503

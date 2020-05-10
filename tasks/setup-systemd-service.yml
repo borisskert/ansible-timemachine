@@ -2,29 +2,18 @@
 - name: Create systemd unit file
   template:
     src: timemachine.systemd.j2
-    dest: "/etc/systemd/system/{{service_name}}.service"
+    dest: "/etc/systemd/system/{{ service_name }}.service"
     owner: root
     group: root
     mode: 0644
-  register: systemd_service
+  notify:
+    - Reload systemd
+    - Restart timemachine service
 
-- name: Reload systemd
-  command: systemctl daemon-reload
-  when: systemd_service.changed
-
-- name: Restart service
+- name: Enable service
   service:
-    name: "{{service_name}}"
-    state: restarted
-    enabled: yes
-  when: >
-    dockerimage.changed
-    or systemd_service.changed
-    or timemachine_config.changed
-    or timemachine_volumes_config.changed
-    or extmap_file.changed
-
-- name: Start service (if not started already)
-  service:
-    name: "{{service_name}}"
-    state: started
+    name: "{{ service_name }}"
+    enabled: true
+  register: timemachine_service
+  changed_when: timemachine_service.status.SubState != 'running'
+  notify: Start timemachine service

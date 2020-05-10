@@ -13,7 +13,7 @@ RUN apk --no-cache --no-progress upgrade && \
 {% if netatalk_version is not defined or netatalk_version == 'latest' %}
         netatalk
 {% else %}
-        netatalk={{netatalk_version}}
+        netatalk~={{netatalk_version}}
 {% endif %}
 
 COPY ./entrypoint.sh /entrypoint.sh

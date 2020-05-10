@@ -3,7 +3,7 @@ alpine_version: latest
 netatalk_version: latest
 
 image_name: local/timemachine
-force_build: no
+force_build: false
 
 service_name: timemachine
 container_name: "{{service_name}}.service"

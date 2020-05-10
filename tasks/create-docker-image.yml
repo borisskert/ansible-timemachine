@@ -1,7 +1,7 @@
 ---
 - name: Create docker working directory
   file:
-    path: "{{working_directory}}"
+    path: "{{ working_directory }}"
     state: directory
     owner: root
     group: root
@@ -9,7 +9,7 @@
 
 - name: Create dockerimage directory
   file:
-    path: "{{dockerfile_path}}"
+    path: "{{ dockerfile_path }}"
     state: directory
     owner: root
     group: root
@@ -18,7 +18,7 @@
 - name: Copy docker entrypoint
   copy:
     src: files/entrypoint.sh
-    dest: "{{dockerfile_path}}/entrypoint.sh"
+    dest: "{{ dockerfile_path }}/entrypoint.sh"
     owner: root
     group: root
     mode: '0755'
@@ -27,7 +27,7 @@
 - name: Copy add-user script
   copy:
     src: files/add-user.sh
-    dest: "{{dockerfile_path}}/add-user.sh"
+    dest: "{{ dockerfile_path }}/add-user.sh"
     owner: root
     group: root
     mode: '0755'
@@ -36,7 +36,7 @@
 - name: Copy update-user-password script
   copy:
     src: files/update-user-password.sh
-    dest: "{{dockerfile_path}}/update-user-password.sh"
+    dest: "{{ dockerfile_path }}/update-user-password.sh"
     owner: root
     group: root
     mode: '0755'
@@ -45,7 +45,7 @@
 - name: Template dockerfile
   template:
     src: Dockerfile.j2
-    dest: "{{dockerfile_path}}/Dockerfile"
+    dest: "{{ dockerfile_path }}/Dockerfile"
     owner: root
     group: root
     mode: 0644
@@ -54,10 +54,10 @@
 - name: Build dockerimage
   docker_image:
     build:
-      path: "{{dockerfile_path}}"
-      pull: no
-    name: "{{image_name}}"
-    tag: "{{netatalk_version}}"
+      path: "{{ dockerfile_path }}"
+      pull: false
+    name: "{{ image_name }}"
+    tag: "{{ netatalk_version }}"
     source: build
     state: present
     force_source: "{{
@@ -67,4 +67,4 @@
       or docker_update_user_password_script.changed
       or force_build
       }}"
-  register: dockerimage
+  notify: Restart timemachine service

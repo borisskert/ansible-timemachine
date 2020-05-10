@@ -1,0 +1,31 @@
+---
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+
+- name: Start timemachine service
+  service:
+    name: "{{ service_name }}"
+    state: started
+  register: timemachine_start
+
+- name: Restart timemachine service
+  service:
+    name: "{{ service_name }}"
+    state: restarted
+  register: timemachine_service_restart
+  when: not (
+    timemachine_start is defined
+    and timemachine_start.changed
+    )
+
+- name: Create timemachine user
+  shell: |
+    /usr/bin/docker exec {{ container_name }} \
+      /add-user.sh {{ item.uid }} \
+                   "{{ item.username }}" \
+                   '{{ item.password }}' \
+                   "/media/time_machine/{{ item.storage }}"
+  register: created_user
+  changed_when: created_user.stdout | length > 0
+  with_items: "{{ users_for_creation }}"

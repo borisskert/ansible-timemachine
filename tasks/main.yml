@@ -5,17 +5,20 @@
 - include: create-volumes.yml
 
 - include: create-storage.yml
-  with_items: "{{storages}}"
+  with_items: "{{ storages }}"
 
 - include: setup-netatalk-config.yml
 - include: setup-systemd-service.yml
 
-- include: create-user.yml
-  with_items: "{{users}}"
+- include: create-users.yml
 
 - include: update-user-password.yml
   with_items: >
-    {{users
+    {{
+    users
     | selectattr('update_password', 'true')
     | list
     }}
+
+- name: Start systemd-managed docker containers
+  meta: flush_handlers

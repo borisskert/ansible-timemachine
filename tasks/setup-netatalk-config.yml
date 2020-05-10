@@ -2,26 +2,27 @@
 - name: Template timemachine config
   template:
     src: afp.conf.j2
-    dest: "{{config_volume}}/etc/afp.conf"
+    dest: "{{ config_volume }}/etc/afp.conf"
     owner: root
     group: root
     mode: 0644
   register: timemachine_config
+  notify: Restart timemachine service
 
 - name: Template volumes config
   template:
     src: AppleVolumes.default.j2
-    dest: "{{config_volume}}/etc/netatalk/AppleVolumes.default"
+    dest: "{{ config_volume }}/etc/netatalk/AppleVolumes.default"
     owner: root
     group: root
     mode: 0644
-  register: timemachine_volumes_config
+  notify: Restart timemachine service
 
 - name: Copy extmap config
   copy:
     src: files/extmap.conf
-    dest: "{{config_volume}}/etc/extmap.conf"
+    dest: "{{ config_volume }}/etc/extmap.conf"
     owner: root
     group: root
-    mode: '0644'
-  register: extmap_file
+    mode: 0644
+  notify: Restart timemachine service

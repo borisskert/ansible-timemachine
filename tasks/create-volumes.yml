@@ -1,18 +1,18 @@
 ---
 - name: Create config directory
   file:
-    path: "{{config_volume}}"
+    path: "{{ config_volume }}"
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: 0750
 
 - include: create-initial-netatalk-config.yml
 
 - name: Create storage directories
   file:
-    path: "{{storage_volume}}"
+    path: "{{ storage_volume }}"
     state: directory
     owner: root
     group: root
-    mode: 0777
+    mode: 0755
