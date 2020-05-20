@@ -1,0 +1,54 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Should template Dockerfile
+      stat:
+        path: /opt/timemachine/docker/Dockerfile
+        checksum_algorithm: sha256
+      register: docker_file
+      # Expecting file to have content:
+      #  FROM alpine:3.11
+      #
+      #  MAINTAINER "Boris Skert <boris.skert@gmail.com>"
+      #
+      #  RUN apk --no-cache --no-progress upgrade && \
+      #  apk --no-cache --no-progress add \
+      #  bash \
+      #  tini \
+      #  netatalk~=3.1
+      #
+      #  COPY ./entrypoint.sh /entrypoint.sh
+      #  COPY ./add-user.sh /add-user.sh
+      #  COPY ./update-user-password.sh /update-user-password.sh
+      #
+      #  VOLUME /media/time_machine
+      #  VOLUME /etc
+      #  VOLUME /var/netatalk
+      #  VOLUME /var/lock
+      #
+      #  EXPOSE 548
+      #
+      #  RUN cat /etc/extmap.conf
+      #
+      #  ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
+      failed_when: not (
+        docker_file.stat.exists
+        and docker_file.stat.checksum
+        == '86bbd1fad310322d8b798ce52bd50398e1c40446487133f52eb0cea989323f86'
+        )
+
+    - name: Should know docker file
+      docker_image:
+        name: local/timemachine:3.1
+        source: local
+        state: present
+
+  post_tasks:
+    - name: Delete docker image
+      docker_image:
+        name: teamspeak:3.1
+        state: absent
+      failed_when: false

@@ -1,13 +1,9 @@
 ---
-- hosts: test_machine
+- name: Converge
+  hosts: all
   become: true
 
   roles:
-    - role: install-docker
-      storage_driver: overlay2
-      cleanup_enabled: false
-      install_pip_docker: true
-
     - role: ansible-timemachine
       alpine_version: '3.11'
       netatalk_version: '3.1'

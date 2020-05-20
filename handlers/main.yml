@@ -2,6 +2,10 @@
 - name: Reload systemd
   systemd:
     daemon_reload: true
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
 
 - name: Start timemachine service
   service:
@@ -18,6 +22,10 @@
     timemachine_start is defined
     and timemachine_start.changed
     )
+    and not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
 
 - name: Create timemachine user
   shell: |
@@ -29,3 +37,7 @@
   register: created_user
   changed_when: created_user.stdout | length > 0
   with_items: "{{ users_for_creation }}"
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )

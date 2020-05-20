@@ -1,0 +1,14 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Should open 548/tcp port
+      command: nc -z -w1 localhost 548
+      changed_when: false
+      register: netcat_548
+      retries: 300
+      delay: 1
+      until: netcat_548 is defined
+        and netcat_548.rc == 0

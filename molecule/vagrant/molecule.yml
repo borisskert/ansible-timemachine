@@ -1,0 +1,37 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: ./molecule/shared/requirements.yml
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: ansible-timemachine-xenial
+    box: ubuntu/xenial64
+  - name: ansible-timemachine-bionic
+    box: ubuntu/bionic64
+  - name: ansible-timemachine-focal
+    box: ubuntu/focal64
+  - name: ansible-timemachine-stretch
+    box: debian/stretch64
+  - name: ansible-timemachine-buster
+    box: debian/buster64
+
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: ../shared/prepare.yml
+    converge: ../shared/converge.yml
+  inventory:
+    host_vars:
+      ansible-timemachine-buster:
+        ansible_python_interpreter: /usr/bin/python3
+      ansible-timemachine-stretch:
+        ansible_python_interpreter: /usr/bin/python3
+
+verifier:
+  name: ansible
