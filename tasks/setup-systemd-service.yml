@@ -7,17 +7,4 @@
     group: root
     mode: 0644
   notify:
-    - Reload systemd
     - Restart timemachine service
-
-- name: Enable service
-  service:
-    name: "{{ service_name }}"
-    enabled: true
-  register: timemachine_service
-  changed_when: timemachine_service.status.SubState != 'running'
-  notify: Start timemachine service
-  when: not (
-    molecule_docker_environment is defined
-    and molecule_docker_environment | bool
-    )

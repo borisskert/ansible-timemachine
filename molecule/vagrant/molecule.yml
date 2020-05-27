@@ -16,6 +16,9 @@ platforms:
     box: ubuntu/bionic64
   - name: ansible-timemachine-focal
     box: ubuntu/focal64
+    box_version: 20200526.0.0
+    instance_raw_config_args:
+      - 'vm.boot_timeout = 600'
   - name: ansible-timemachine-stretch
     box: debian/stretch64
     groups:

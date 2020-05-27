@@ -12,6 +12,19 @@
 
 - include: create-users.yml
 
+- name: Start systemd-managed docker containers
+  meta: flush_handlers
+
+- name: Enable/start timemachine service (if not started)
+  service:
+    name: "{{ service_name }}"
+    enabled: true
+    state: started
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
+
 - include: update-user-password.yml
   with_items: >
     {{
@@ -19,6 +32,3 @@
     | selectattr('update_password', 'true')
     | list
     }}
-
-- name: Start systemd-managed docker containers
-  meta: flush_handlers
