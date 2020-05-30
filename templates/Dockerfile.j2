@@ -1,7 +1,7 @@
-{% if alpine_version is not defined or alpine_version == 'latest' %}
+{% if timemachine_alpine_version is not defined or timemachine_alpine_version == 'latest' %}
 FROM alpine
 {% else %}
-FROM alpine:{{alpine_version}}
+FROM alpine:{{timemachine_alpine_version}}
 {% endif %}
 
 MAINTAINER "Boris Skert <boris.skert@gmail.com>"
@@ -10,10 +10,10 @@ RUN apk --no-cache --no-progress upgrade && \
     apk --no-cache --no-progress add \
         bash \
         tini \
-{% if netatalk_version is not defined or netatalk_version == 'latest' %}
+{% if timemachine_netatalk_version is not defined or timemachine_netatalk_version == 'latest' %}
         netatalk
 {% else %}
-        netatalk~={{netatalk_version}}
+        netatalk~={{timemachine_netatalk_version}}
 {% endif %}
 
 COPY ./entrypoint.sh /entrypoint.sh

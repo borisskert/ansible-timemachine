@@ -1,21 +1,21 @@
 [Global]
-{% if host_name is defined %}
-hostname = {{host_name}}
+{% if timemachine_host_name is defined %}
+hostname = {{timemachine_host_name}}
 {% endif %}
-{% if mimic_model is defined %}
-mimic model = {{mimic_model}}
+{% if timemachine_mimic_model is defined %}
+mimic model = {{timemachine_mimic_model}}
 {% else %}
 mimic model = TimeCapsule
 {% endif %}
 log file = /dev/stdout
-{% if log_level is defined %}
-log level = default:{{log_level}}
+{% if timemachine_log_level is defined %}
+log level = default:{{timemachine_log_level}}
 {% else %}
 log level = default:info
 {% endif %}
 zeroconf = yes
 
-{% for storage in storages %}
+{% for storage in timemachine_storages %}
 [{{storage.name}}]
 path = /media/time_machine/{{storage.path}}
 valid users = {{storage.user}}
@@ -23,6 +23,6 @@ time machine = yes
 {% if storage.size_limit is defined %}
 vol size limit = {{storage.size_limit}}
 {% else %}
-vol size limit = {{default_volume_size_limit}}
+vol size limit = {{timemachine_default_volume_size_limit}}
 {% endif %}
 {% endfor %}

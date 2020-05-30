@@ -1,27 +1,27 @@
 ---
-alpine_version: latest
-netatalk_version: latest
+timemachine_alpine_version: latest
+timemachine_netatalk_version: latest
 
-image_name: local/timemachine
-force_build: false
+timemachine_image_name: local/timemachine
+timemachine_force_build: false
 
-service_name: timemachine
-container_name: "{{service_name}}.service"
+timemachine_service_name: timemachine
+timemachine_container_name: "{{ timemachine_service_name }}.service"
 
-working_directory: /opt/timemachine
-dockerfile_path: "{{working_directory}}/docker"
+timemachine_working_directory: /opt/timemachine
+timemachine_dockerfile_path: "{{ timemachine_working_directory }}/docker"
 
-storage_volume: ''
-config_volume: ''
+timemachine_storage_volume: ''
+timemachine_config_volume: ''
 
-interface: 0.0.0.0
-netatalk_port: ''
+timemachine_interface: 0.0.0.0
+timemachine_netatalk_port: ''
 
-host_name: ''
-log_level: info
-mimic_model: TimeCapsule
+timemachine_host_name: ''
+timemachine_log_level: info
+timemachine_mimic_model: TimeCapsule
 
-users: []
-storages: []
+timemachine_users: []
+timemachine_storages: []
 
-default_volume_size_limit: 1000
+timemachine_default_volume_size_limit: 1000

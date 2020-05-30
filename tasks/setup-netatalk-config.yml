@@ -2,7 +2,7 @@
 - name: Template timemachine config
   template:
     src: afp.conf.j2
-    dest: "{{ config_volume }}/etc/afp.conf"
+    dest: "{{ timemachine_config_volume }}/etc/afp.conf"
     owner: root
     group: root
     mode: 0644
@@ -12,7 +12,7 @@
 - name: Template volumes config
   template:
     src: AppleVolumes.default.j2
-    dest: "{{ config_volume }}/etc/netatalk/AppleVolumes.default"
+    dest: "{{ timemachine_config_volume }}/etc/netatalk/AppleVolumes.default"
     owner: root
     group: root
     mode: 0644
@@ -21,7 +21,7 @@
 - name: Copy extmap config
   copy:
     src: files/extmap.conf
-    dest: "{{ config_volume }}/etc/extmap.conf"
+    dest: "{{ timemachine_config_volume }}/etc/extmap.conf"
     owner: root
     group: root
     mode: 0644

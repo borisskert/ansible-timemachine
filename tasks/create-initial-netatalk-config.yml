@@ -1,7 +1,7 @@
 ---
 - name: Create config directory structure
   file:
-    path: "{{ config_volume }}/etc"
+    path: "{{ timemachine_config_volume }}/etc"
     state: directory
     owner: root
     group: root
@@ -9,12 +9,12 @@
 
 - name: Check if passwd db exists
   stat:
-    path: "{{ config_volume }}/etc/passwd"
+    path: "{{ timemachine_config_volume }}/etc/passwd"
   register: passwd_file
 
 - name: Create passwd db
   file:
-    path: "{{ config_volume }}/etc/passwd"
+    path: "{{ timemachine_config_volume }}/etc/passwd"
     state: touch
     owner: root
     group: root
@@ -23,12 +23,12 @@
 
 - name: Check if shadow db exists
   stat:
-    path: "{{ config_volume }}/etc/shadow"
+    path: "{{ timemachine_config_volume }}/etc/shadow"
   register: shadow_file
 
 - name: Create shadow db
   file:
-    path: "{{ config_volume }}/etc/shadow"
+    path: "{{ timemachine_config_volume }}/etc/shadow"
     state: touch
     owner: root
     group: root
@@ -37,12 +37,12 @@
 
 - name: Check if group db exists
   stat:
-    path: "{{ config_volume }}/etc/group"
+    path: "{{ timemachine_config_volume }}/etc/group"
   register: group_file
 
 - name: Create group db
   file:
-    path: "{{ config_volume }}/etc/group"
+    path: "{{ timemachine_config_volume }}/etc/group"
     state: touch
     owner: root
     group: root
@@ -51,7 +51,7 @@
 
 - name: Create etc/netatalk directory
   file:
-    path: "{{ config_volume }}/etc/netatalk"
+    path: "{{ timemachine_config_volume }}/etc/netatalk"
     state: directory
     owner: root
     group: root

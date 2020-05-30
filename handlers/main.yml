@@ -1,7 +1,7 @@
 ---
 - name: Restart timemachine service
   systemd:
-    name: "{{ service_name }}"
+    name: "{{ timemachine_service_name }}"
     state: restarted
     daemon_reload: true
   register: timemachine_service_restart
@@ -12,7 +12,7 @@
 
 - name: Create timemachine user
   shell: |
-    /usr/bin/docker exec {{ container_name }} \
+    /usr/bin/docker exec {{ timemachine_container_name }} \
       /add-user.sh {{ item.uid }} \
                    "{{ item.username }}" \
                    '{{ item.password }}' \

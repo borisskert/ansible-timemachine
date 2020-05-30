@@ -1,7 +1,7 @@
 ---
 - name: Create config directory
   file:
-    path: "{{ config_volume }}"
+    path: "{{ timemachine_config_volume }}"
     state: directory
     owner: root
     group: root
@@ -11,7 +11,7 @@
 
 - name: Create storage directories
   file:
-    path: "{{ storage_volume }}"
+    path: "{{ timemachine_storage_volume }}"
     state: directory
     owner: root
     group: root

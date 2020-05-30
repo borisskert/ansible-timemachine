@@ -3,7 +3,7 @@
   set_fact:
     selected_user: >
       {{
-      users
+      timemachine_users
       | selectattr('username', 'defined')
       | selectattr('username', 'eq', item.user)
       | first
@@ -11,7 +11,7 @@
 
 - name: Create storage
   file:
-    path: "{{ storage_volume }}/{{ item.path }}"
+    path: "{{ timemachine_storage_volume }}/{{ item.path }}"
     state: directory
     owner: "{{ selected_user.uid }}"
     group: "{{ selected_user.uid }}"

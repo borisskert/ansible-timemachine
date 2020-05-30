@@ -2,31 +2,31 @@
 WantedBy=multi-user.target
 
 [Unit]
-Description={{service_name}} service
+Description={{timemachine_service_name}} service
 After=docker.service
 Requires=docker.service
 
 [Service]
-ExecStartPre=-/usr/bin/docker rm -f {{container_name}}
-ExecStartPre=/usr/bin/docker build --tag {{image_name}}:{{netatalk_version}} {{dockerfile_path}}
+ExecStartPre=-/usr/bin/docker rm -f {{timemachine_container_name}}
+ExecStartPre=/usr/bin/docker build --tag {{timemachine_image_name}}:{{timemachine_netatalk_version}} {{timemachine_dockerfile_path}}
 
-ExecStart=/usr/bin/docker run --name {{container_name}} \
-{% if storage_volume != "" %}
-            --volume {{storage_volume}}:/media/time_machine \
+ExecStart=/usr/bin/docker run --name {{timemachine_container_name}} \
+{% if timemachine_storage_volume != "" %}
+            --volume {{timemachine_storage_volume}}:/media/time_machine \
 {% endif %}
-{% if config_volume != "" %}
-            --volume {{config_volume}}/etc:/etc \
+{% if timemachine_config_volume != "" %}
+            --volume {{timemachine_config_volume}}/etc:/etc \
 {% endif %}
             --tmpfs /tmp \
             --tmpfs /var/netatalk \
             --tmpfs /var/lock \
-{% if netatalk_port != "" %}
-            --publish {{interface}}:{{netatalk_port}}:548/tcp \
+{% if timemachine_netatalk_port != "" %}
+            --publish {{timemachine_interface}}:{{timemachine_netatalk_port}}:548/tcp \
 {% endif %}
-            {{image_name}}:{{netatalk_version}}
+            {{timemachine_image_name}}:{{timemachine_netatalk_version}}
 
-ExecStop=-/usr/bin/docker stop {{container_name}}
-ExecStopPost=-/usr/bin/docker rm -f {{container_name}}
+ExecStop=-/usr/bin/docker stop {{timemachine_container_name}}
+ExecStopPost=-/usr/bin/docker rm -f {{timemachine_container_name}}
 
 Restart=always
 RestartSec=60s

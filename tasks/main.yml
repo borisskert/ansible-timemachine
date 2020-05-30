@@ -5,7 +5,7 @@
 - include: create-volumes.yml
 
 - include: create-storage.yml
-  with_items: "{{ storages }}"
+  with_items: "{{ timemachine_storages }}"
 
 - include: setup-netatalk-config.yml
 - include: setup-systemd-service.yml
@@ -17,7 +17,7 @@
 
 - name: Enable/start timemachine service (if not started)
   service:
-    name: "{{ service_name }}"
+    name: "{{ timemachine_service_name }}"
     enabled: true
     state: started
   when: not (
@@ -28,7 +28,7 @@
 - include: update-user-password.yml
   with_items: >
     {{
-    users
+    timemachine_users
     | selectattr('update_password', 'true')
     | list
     }}

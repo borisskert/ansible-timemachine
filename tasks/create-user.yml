@@ -3,7 +3,7 @@
   set_fact:
     selected_storage: >
       {{
-      storages
+      timemachine_storages
       | selectattr('user', 'defined')
       | selectattr('user', 'eq', item.username)
       | first
@@ -20,7 +20,7 @@
 - name: Determine if timemachine has to be created
   shell: |
     set -o pipefail
-    cat {{ config_volume }}/etc/passwd \
+    cat {{ timemachine_config_volume }}/etc/passwd \
     | grep {{ user_to_create.username }}:x:{{ user_to_create.uid }}
   args:
     executable: /bin/bash

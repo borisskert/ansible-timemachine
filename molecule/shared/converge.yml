@@ -5,24 +5,23 @@
 
   roles:
     - role: ansible-timemachine
-      alpine_version: '3.11'
-      netatalk_version: '3.1'
-      host_name: my-ansible-timemachine
-      mimic_model: RackMac
-      server_name: My Time Machine
-      storage_volume: /srv/timemachine/storage
-      config_volume: /srv/timemachine/config
-      interface: 0.0.0.0
-      netatalk_port: 548
-      log_level: error
-      users:
+      timemachine_alpine_version: '3.11'
+      timemachine_netatalk_version: '3.1'
+      timemachine_host_name: my-ansible-timemachine
+      timemachine_mimic_model: RackMac
+      timemachine_storage_volume: /srv/timemachine/storage
+      timemachine_config_volume: /srv/timemachine/config
+      timemachine_interface: 0.0.0.0
+      timemachine_netatalk_port: 548
+      timemachine_log_level: error
+      timemachine_users:
         - username: user1
           password: user1pwd
           uid: 2001
         - username: user2
           password: psw2
           uid: 2002
-      storages:
+      timemachine_storages:
         - name: Time Machine user1
           path: storage1
           user: user1
