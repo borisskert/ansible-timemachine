@@ -9,12 +9,11 @@ Installs a timemachine server as docker container.
 
 ## Role requirements
 
-* python-docker package
+* (none so far)
 
 ## What does this role
 
 * Template Dockerfile
-* Build docker image
 * Create volume paths for docker container
 * Template the initial netatalk config (including user and storage definition)
 * Setup systemd unit file
@@ -113,6 +112,7 @@ Requirements:
 
 * [Vagrant](https://www.vagrantup.com/)
 * [VirtualBox](https://www.virtualbox.org/)
+* [libvirt](https://libvirt.org/)
 * [Ansible](https://docs.ansible.com/)
 * [Molecule](https://molecule.readthedocs.io/en/latest/index.html)
 * [yamllint](https://yamllint.readthedocs.io/en/stable/#)
@@ -123,12 +123,14 @@ Requirements:
 
 ```shell script
 molecule test
+molecule test --scenario-name all-parameters
 ```
 
 ### Run within Vagrant
 
 ```shell script
  molecule test --scenario-name vagrant --parallel
+ molecule test --scenario-name vagrant-all-parameters --parallel
 ```
 
 I recommend to use [pyenv](https://github.com/pyenv/pyenv) for local testing.

@@ -1,6 +1,8 @@
 ---
 dependency:
   name: galaxy
+  options:
+    role-file: ./molecule/default/requirements.yml
 
 lint: |
   set -e
@@ -29,6 +31,8 @@ platforms:
 
 provisioner:
   name: ansible
+  playbooks:
+    prepare: ../default/prepare.yml
   inventory:
     group_vars:
       docker:

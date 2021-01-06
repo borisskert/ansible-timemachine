@@ -12,18 +12,18 @@ ExecStartPre=/usr/bin/docker build --tag {{timemachine_image_name}}:{{timemachin
 
 ExecStart=/usr/bin/docker run --name {{timemachine_container_name}} \
 {% if timemachine_storage_volume != "" %}
-            --volume {{timemachine_storage_volume}}:/media/time_machine \
+    --volume {{timemachine_storage_volume}}:/media/time_machine \
 {% endif %}
 {% if timemachine_config_volume != "" %}
-            --volume {{timemachine_config_volume}}/etc:/etc \
+    --volume {{timemachine_config_volume}}/etc:/etc \
 {% endif %}
-            --tmpfs /tmp \
-            --tmpfs /var/netatalk \
-            --tmpfs /var/lock \
+    --tmpfs /tmp \
+    --tmpfs /var/netatalk \
+    --tmpfs /var/lock \
 {% if timemachine_netatalk_port != "" %}
-            --publish {{timemachine_interface}}:{{timemachine_netatalk_port}}:548/tcp \
+    --publish {{timemachine_interface}}:{{timemachine_netatalk_port}}:548/tcp \
 {% endif %}
-            {{timemachine_image_name}}:{{timemachine_netatalk_version}}
+    {{timemachine_image_name}}:{{timemachine_netatalk_version}}
 
 ExecStop=-/usr/bin/docker stop {{timemachine_container_name}}
 ExecStopPost=-/usr/bin/docker rm -f {{timemachine_container_name}}

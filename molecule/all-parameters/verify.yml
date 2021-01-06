@@ -12,7 +12,7 @@
         not docker_file.content == ( expected_content | b64encode )
       vars:
         expected_content: |
-          FROM alpine
+          FROM alpine:3.11
 
           MAINTAINER "Boris Skert <boris.skert@gmail.com>"
 
@@ -20,7 +20,7 @@
               apk --no-cache --no-progress add \
                   bash \
                   tini \
-                  netatalk
+                  netatalk~=3.1
 
           COPY ./entrypoint.sh /entrypoint.sh
           COPY ./add-user.sh /add-user.sh
@@ -158,16 +158,16 @@
 
           [Service]
           ExecStartPre=-/usr/bin/docker rm -f timemachine.service
-          ExecStartPre=/usr/bin/docker build --tag local/timemachine:latest /opt/timemachine/docker
+          ExecStartPre=/usr/bin/docker build --tag local/timemachine:3.1 /opt/timemachine/docker
 
           ExecStart=/usr/bin/docker run --name timemachine.service \
-              --volume /srv/timemachine/storage:/media/time_machine \
-              --volume /srv/timemachine/config/etc:/etc \
+              --volume /srv/my_timemachine/storage:/media/time_machine \
+              --volume /srv/my_timemachine/config/etc:/etc \
               --tmpfs /tmp \
               --tmpfs /var/netatalk \
               --tmpfs /var/lock \
-              --publish 0.0.0.0:548:548/tcp \
-              local/timemachine:latest
+              --publish 127.0.0.1:10548:548/tcp \
+              local/timemachine:3.1
 
           ExecStop=-/usr/bin/docker stop timemachine.service
           ExecStopPost=-/usr/bin/docker rm -f timemachine.service
@@ -178,45 +178,58 @@
 
     - name: Should create afp.conf file
       slurp:
-        src: /srv/timemachine/config/etc/afp.conf
+        src: /srv/my_timemachine/config/etc/afp.conf
       register: afp_conf_file
       failed_when:
         not afp_conf_file.content == ( expected_content | b64encode )
       vars:
         expected_content: |
           [Global]
-          hostname = timemachine
-          mimic model = TimeCapsule
+          hostname = my-ansible-timemachine
+          mimic model = RackMac
           log file = /dev/stdout
-          log level = default:info
+          log level = default:error
           zeroconf = yes
+          [Time Machine user1]
+          path = /media/time_machine/storage1
+          valid users = user1
+          time machine = yes
+          vol size limit = 256000
+          [Time Machine user2]
+          path = /media/time_machine/storage2
+          valid users = user2
+          time machine = yes
+          vol size limit = 64000
 
-    - name: Should create (empty) AppleVolumes.default file
-      stat:
-        path: /srv/timemachine/config/etc/netatalk/AppleVolumes.default
+    - name: Should create AppleVolumes.default file
+      slurp:
+        src: /srv/my_timemachine/config/etc/netatalk/AppleVolumes.default
       register: applevolumes_file
-      failed_when: not applevolumes_file.stat.exists
+      vars:
+        expected_content: |
+          /media/time_machine/storage1 "Time Machine user1" options:tm
+          /media/time_machine/storage2 "Time Machine user2" options:tm
 
     - name: Should create config volume directory
       stat:
-        path: /srv/timemachine/config
+        path: /srv/my_timemachine/config
       register: config_volume_directory
       failed_when: not config_volume_directory.stat.exists
 
     - name: Should create storage volume directory
       stat:
-        path: /srv/timemachine/storage
+        path: /srv/my_timemachine/storage
       register: storage_volume_directory
       failed_when: not storage_volume_directory.stat.exists
 
-    - name: Should open 548/tcp port
-      command: nc -z -w1 localhost 548
+    - name: Should open 10548/tcp port
+      command: nc -z -w1 localhost 10548
       changed_when: false
-      register: netcat_548
+      register: netcat_10548
       retries: 300
       delay: 1
-      until: netcat_548 is defined
-        and netcat_548.rc == 0
+      until: netcat_10548 is defined
+        and netcat_10548.rc == 0
       when: not (
         molecule_docker_environment is defined
         and molecule_docker_environment | bool

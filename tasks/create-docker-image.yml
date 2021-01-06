@@ -22,7 +22,7 @@
     owner: root
     group: root
     mode: '0755'
-  register: docker_entrypoint
+  notify: Restart timemachine service
 
 - name: Copy add-user script
   copy:
@@ -31,7 +31,7 @@
     owner: root
     group: root
     mode: '0755'
-  register: docker_add_user_script
+  notify: Restart timemachine service
 
 - name: Copy update-user-password script
   copy:
@@ -40,7 +40,7 @@
     owner: root
     group: root
     mode: '0755'
-  register: docker_update_user_password_script
+  notify: Restart timemachine service
 
 - name: Template dockerfile
   template:
@@ -49,22 +49,4 @@
     owner: root
     group: root
     mode: 0644
-  register: dockerfile
-
-- name: Build dockerimage
-  docker_image:
-    build:
-      path: "{{ timemachine_dockerfile_path }}"
-      pull: false
-    name: "{{ timemachine_image_name }}"
-    tag: "{{ timemachine_netatalk_version }}"
-    source: build
-    state: present
-    force_source: "{{
-      dockerfile.changed
-      or docker_entrypoint.changed
-      or docker_add_user_script.changed
-      or docker_update_user_password_script.changed
-      or timemachine_force_build
-      }}"
   notify: Restart timemachine service

@@ -9,10 +9,10 @@
       timemachine_netatalk_version: '3.1'
       timemachine_host_name: my-ansible-timemachine
       timemachine_mimic_model: RackMac
-      timemachine_storage_volume: /srv/timemachine/storage
-      timemachine_config_volume: /srv/timemachine/config
-      timemachine_interface: 0.0.0.0
-      timemachine_netatalk_port: 548
+      timemachine_storage_volume: /srv/my_timemachine/storage
+      timemachine_config_volume: /srv/my_timemachine/config
+      timemachine_interface: 127.0.0.1
+      timemachine_netatalk_port: 10548
       timemachine_log_level: error
       timemachine_users:
         - username: user1

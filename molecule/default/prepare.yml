@@ -1,0 +1,14 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+
+  roles:
+    - role: install-docker
+      docker_storage_driver: overlay2
+      docker_cleanup_enabled: false
+      docker_install_pip_package: false
+      when: not (
+        molecule_docker_environment is defined
+        and molecule_docker_environment | bool
+        )

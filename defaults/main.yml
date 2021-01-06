@@ -11,13 +11,13 @@ timemachine_container_name: "{{ timemachine_service_name }}.service"
 timemachine_working_directory: /opt/timemachine
 timemachine_dockerfile_path: "{{ timemachine_working_directory }}/docker"
 
-timemachine_storage_volume: ''
-timemachine_config_volume: ''
+timemachine_storage_volume: /srv/timemachine/storage
+timemachine_config_volume: /srv/timemachine/config
 
 timemachine_interface: 0.0.0.0
-timemachine_netatalk_port: ''
+timemachine_netatalk_port: 548
 
-timemachine_host_name: ''
+timemachine_host_name: timemachine
 timemachine_log_level: info
 timemachine_mimic_model: TimeCapsule
 

@@ -14,7 +14,6 @@ log level = default:{{timemachine_log_level}}
 log level = default:info
 {% endif %}
 zeroconf = yes
-
 {% for storage in timemachine_storages %}
 [{{storage.name}}]
 path = /media/time_machine/{{storage.path}}

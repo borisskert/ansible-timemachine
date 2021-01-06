@@ -27,6 +27,4 @@ VOLUME /var/lock
 
 EXPOSE 548
 
-RUN cat /etc/extmap.conf
-
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
