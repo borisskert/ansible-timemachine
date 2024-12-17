@@ -3,5 +3,5 @@
   set_fact:
     users_for_creation: []
 
-- include: create-user.yml
+- include_tasks: create-user.yml
   with_items: "{{ timemachine_users }}"

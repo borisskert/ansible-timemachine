@@ -3,6 +3,7 @@ dependency:
   name: galaxy
   options:
     role-file: ./molecule/default/requirements.yml
+    force: true
 
 driver:
   name: vagrant
@@ -10,10 +11,18 @@ driver:
     name: libvirt
 
 platforms:
-  - name: ansible-usenet-focal
-    box: generic/ubuntu2004
-  - name: ansible-timemachine-buster
-    box: generic/debian10
+  - name: ansible-timemachine-noble
+    box: cloud-image/ubuntu-24.04
+  - name: ansible-timemachine-jammy
+    box: cloud-image/ubuntu-22.04
+  - name: ansible-timemachine-focal
+    box: cloud-image/ubuntu-20.04
+  - name: ansible-timemachine-bookworm
+    box: cloud-image/debian-12
+    groups:
+      - debian
+  - name: ansible-timemachine-bullseye
+    box: cloud-image/debian-11
     groups:
       - debian
 

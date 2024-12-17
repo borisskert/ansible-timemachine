@@ -1,14 +1,14 @@
 ---
-- include: create-docker-image.yml
-- include: create-volumes.yml
+- include_tasks: create-docker-image.yml
+- include_tasks: create-volumes.yml
 
-- include: create-storage.yml
+- include_tasks: create-storage.yml
   with_items: "{{ timemachine_storages }}"
 
-- include: setup-netatalk-config.yml
-- include: setup-systemd-service.yml
+- include_tasks: setup-netatalk-config.yml
+- include_tasks: setup-systemd-service.yml
 
-- include: create-users.yml
+- include_tasks: create-users.yml
 
 - name: Start systemd-managed docker containers
   meta: flush_handlers
@@ -23,7 +23,7 @@
     and molecule_docker_environment | bool
     )
 
-- include: update-user-password.yml
+- include_tasks: update-user-password.yml
   with_items: >
     {{
     timemachine_users
