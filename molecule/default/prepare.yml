@@ -11,3 +11,10 @@
         molecule_docker_environment is defined
         and molecule_docker_environment | bool
         )
+
+  post_tasks:
+    - name: Install netcat on Debian-based systems (to test open ports)
+      package:
+        name: netcat-traditional
+        state: present
+      when: ansible_os_family == 'Debian'

@@ -7,7 +7,7 @@
     group: root
     mode: 0750
 
-- include: create-initial-netatalk-config.yml
+- include_tasks: create-initial-netatalk-config.yml
 
 - name: Create storage directories
   file:
